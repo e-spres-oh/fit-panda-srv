@@ -1,7 +1,11 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
+import Food from './src/foods/food.entity';
 import { CreateFood1676911962027 } from './migrations/1676911962027-CreateFood';
-import Food from 'src/foods/food.entity';
+import { AddConsumedAtToFood1676925781491 } from './migrations/1676925781491-AddConsumedAtToFood';
+import { CreatePhoto1676926319261 } from './migrations/1676926319261-CreatePhoto';
+import { FoodHasPhoto1676926579573 } from './migrations/1676926579573-FoodHasPhoto';
+import Photo from 'src/photos/photo.entity';
 
 config();
 
@@ -12,6 +16,11 @@ export default new DataSource({
   username: process.env.DATABASE_USERNAME || 'postgres',
   password: process.env.DATABASE_PASSWORD || 'postgres',
   database: process.env.DATABASE_NAME || 'fit_panda',
-  entities: [Food],
-  migrations: [CreateFood1676911962027],
+  entities: [Food, Photo],
+  migrations: [
+    CreateFood1676911962027,
+    AddConsumedAtToFood1676925781491,
+    CreatePhoto1676926319261,
+    FoodHasPhoto1676926579573,
+  ],
 });

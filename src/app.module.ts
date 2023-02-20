@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
 import { FoodsModule } from './foods/foods.module';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [
@@ -18,8 +19,10 @@ import { FoodsModule } from './foods/foods.module';
       database: process.env.DATABASE_NAME || 'fit_panda',
       entities: [],
       autoLoadEntities: true,
+      logging: true,
     }),
     FoodsModule,
+    PhotosModule,
   ],
   controllers: [],
   providers: [],
