@@ -4,30 +4,30 @@ import { Repository } from 'typeorm';
 import Food from './food.entity';
 
 @Injectable()
-export class FoodService {
+export class FoodsService {
   constructor(
     @InjectRepository(Food)
-    private foodRepository: Repository<Food>,
+    private foodsRepository: Repository<Food>,
   ) {}
 
   async findAll() {
-    return this.foodRepository.find();
+    return this.foodsRepository.find();
   }
 
   async findOne(id: number) {
-    return this.foodRepository.findOneBy({ id });
+    return this.foodsRepository.findOneBy({ id });
   }
 
   async remove(id: number) {
-    await this.foodRepository.delete(id);
+    await this.foodsRepository.delete(id);
   }
 
   async create(food: Omit<Food, 'id'>) {
-    return this.foodRepository.save(food);
+    return this.foodsRepository.save(food);
   }
 
   async update(id: number, food: Partial<Omit<Food, 'id'>>) {
-    await this.foodRepository.update(id, food);
-    return this.foodRepository.findOneBy({ id });
+    await this.foodsRepository.update(id, food);
+    return this.foodsRepository.findOneBy({ id });
   }
 }

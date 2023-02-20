@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import Food from './food.entity';
-import { FoodController } from './food.controller';
-import { FoodService } from './food.service';
+import { FoodsController } from './foods.controller';
+import { FoodsService } from './foods.service';
 
 describe('FoodController', () => {
-  let controller: FoodController;
+  let controller: FoodsController;
 
   beforeEach(async () => {
     const mockRepository = {
@@ -13,14 +13,14 @@ describe('FoodController', () => {
     };
 
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [FoodController],
+      controllers: [FoodsController],
       providers: [
-        FoodService,
+        FoodsService,
         { provide: getRepositoryToken(Food), useValue: mockRepository },
       ],
     }).compile();
 
-    controller = app.get<FoodController>(FoodController);
+    controller = app.get<FoodsController>(FoodsController);
   });
 
   describe('/', () => {

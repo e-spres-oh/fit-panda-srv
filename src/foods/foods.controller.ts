@@ -10,25 +10,25 @@ import {
   Put,
 } from '@nestjs/common';
 import Food from './food.entity';
-import { FoodService } from './food.service';
+import { FoodsService } from './foods.service';
 
 @Controller('foods')
-export class FoodController {
-  constructor(private readonly foodService: FoodService) {}
+export class FoodsController {
+  constructor(private readonly foodsService: FoodsService) {}
 
   @Get()
   async findAll(): Promise<Food[]> {
-    return this.foodService.findAll();
+    return this.foodsService.findAll();
   }
 
   @Post()
   async create(@Body() food: Omit<Food, 'id'>): Promise<Food> {
-    return this.foodService.create(food);
+    return this.foodsService.create(food);
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Food> {
-    const result = await this.foodService.findOne(+id);
+    const result = await this.foodsService.findOne(+id);
     if (!result) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
@@ -41,7 +41,7 @@ export class FoodController {
     @Param('id') id: string,
     @Body() food: Partial<Omit<Food, 'id'>>,
   ) {
-    const result = await this.foodService.update(+id, food);
+    const result = await this.foodsService.update(+id, food);
     if (!result) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
@@ -51,11 +51,11 @@ export class FoodController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    const result = await this.foodService.findOne(+id);
+    const result = await this.foodsService.findOne(+id);
     if (!result) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
 
-    return this.foodService.remove(+id);
+    return this.foodsService.remove(+id);
   }
 }

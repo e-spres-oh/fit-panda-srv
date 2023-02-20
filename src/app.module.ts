@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FoodController } from './food.controller';
-import { FoodService } from './food.service';
 import configuration from './config/configuration';
-import Food from './food.entity';
+import { FoodsModule } from './foods/foods.module';
 
 @Module({
   imports: [
@@ -21,9 +19,9 @@ import Food from './food.entity';
       entities: [],
       autoLoadEntities: true,
     }),
-    TypeOrmModule.forFeature([Food]),
+    FoodsModule,
   ],
-  controllers: [FoodController],
-  providers: [FoodService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

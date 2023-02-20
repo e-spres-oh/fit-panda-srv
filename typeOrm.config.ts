@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
-import Food from './src/food.entity';
 import { CreateFood1676911962027 } from './migrations/1676911962027-CreateFood';
+import Food from 'src/foods/food.entity';
 
 config();
 
