@@ -23,7 +23,7 @@ describe('FoodController', () => {
     controller = app.get<FoodsController>(FoodsController);
   });
 
-  describe('/', () => {
+  describe('/foods', () => {
     it('should return all foods', async () => {
       expect(await controller.findAll()).toEqual([]);
     });

@@ -1,4 +1,4 @@
-import Photo from 'src/photos/photo.entity';
+import Photo from '../photos/photo.entity';
 import {
   Column,
   Entity,
