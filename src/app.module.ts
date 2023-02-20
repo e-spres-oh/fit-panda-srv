@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
 import { FoodsModule } from './foods/foods.module';
+import { HealthModule } from './health/health.module';
 import { PhotosModule } from './photos/photos.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { PhotosModule } from './photos/photos.module';
     }),
     FoodsModule,
     PhotosModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
