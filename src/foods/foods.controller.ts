@@ -9,9 +9,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import Food from './food.entity';
+import { ApiTags } from '@nestjs/swagger';
+import Food, { CreateFoodDTO, UpdateFoodDTO } from './food.entity';
 import { FoodsService } from './foods.service';
 
+@ApiTags('foods')
 @Controller('foods')
 export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
@@ -22,7 +24,7 @@ export class FoodsController {
   }
 
   @Post()
-  async create(@Body() food: Omit<Food, 'id'>): Promise<Food> {
+  async create(@Body() food: CreateFoodDTO): Promise<Food> {
     return this.foodsService.create(food);
   }
 
@@ -37,10 +39,7 @@ export class FoodsController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() food: Partial<Omit<Food, 'id'>>,
-  ) {
+  async update(@Param('id') id: string, @Body() food: UpdateFoodDTO) {
     const result = await this.foodsService.update(+id, food);
     if (!result) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);

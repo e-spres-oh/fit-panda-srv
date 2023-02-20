@@ -8,6 +8,16 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import User from '../users/user.entity';
+import { ApiHideProperty, PartialType } from '@nestjs/swagger';
+
+export class CreateFoodDTO {
+  name: string;
+  kcal: number;
+  consumedAt: Date;
+  photoId: number;
+}
+
+export class UpdateFoodDTO extends PartialType(CreateFoodDTO) {}
 
 @Entity()
 class Food {
@@ -28,6 +38,7 @@ class Food {
   @Column({ name: 'photo_id' })
   photoId: number;
 
+  @ApiHideProperty()
   @OneToOne(() => Photo)
   @JoinColumn({ name: 'photo_id' })
   photo: Photo;
@@ -35,6 +46,7 @@ class Food {
   @Column({ name: 'user_id' })
   userId: number;
 
+  @ApiHideProperty()
   @ManyToOne(() => User, (user) => user.foods)
   @JoinColumn({ name: 'user_id' })
   user: User;

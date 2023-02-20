@@ -6,12 +6,15 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/decorators';
-import User from 'src/users/user.entity';
+import User, { CreateUserDTO, UserDTO } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { LoginDTO, LoginResponseDTO } from './auth.dto';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -21,7 +24,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  async create(@Body() user: Omit<User, 'id'>) {
+  async create(@Body() user: CreateUserDTO): Promise<UserDTO> {
     try {
       const { password, ...result } = await this.usersService.create(user);
       return result;
@@ -37,7 +40,10 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Req() req: Request & { user: User }) {
+  async login(
+    @Body() body: LoginDTO,
+    @Req() req: Request & { user: User },
+  ): Promise<LoginResponseDTO> {
     return this.authService.login(req.user);
   }
 }

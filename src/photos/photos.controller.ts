@@ -7,9 +7,11 @@ import {
   HttpStatus,
   Param,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import Photo from './photo.entity';
 import { PhotosService } from './photos.service';
 
+@ApiTags('photos')
 @Controller('photos')
 export class PhotosController {
   constructor(private readonly photosService: PhotosService) {}

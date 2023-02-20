@@ -3,7 +3,7 @@ import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CurrentUser } from 'src/auth/jwt.strategy';
 import { Repository } from 'typeorm';
-import Food from './food.entity';
+import Food, { CreateFoodDTO, UpdateFoodDTO } from './food.entity';
 
 @Injectable({ scope: Scope.REQUEST })
 export class FoodsService {
@@ -26,11 +26,11 @@ export class FoodsService {
     await this.foodsRepository.delete({ id, userId: this.request.user.id });
   }
 
-  async create(food: Omit<Food, 'id'>) {
+  async create(food: CreateFoodDTO) {
     return this.foodsRepository.save({ ...food, userId: this.request.user.id });
   }
 
-  async update(id: number, food: Partial<Omit<Food, 'id'>>) {
+  async update(id: number, food: UpdateFoodDTO) {
     await this.foodsRepository.update(
       { id, userId: this.request.user.id },
       food,
