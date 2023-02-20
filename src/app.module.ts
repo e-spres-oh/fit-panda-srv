@@ -5,6 +5,8 @@ import configuration from './config/configuration';
 import { FoodsModule } from './foods/foods.module';
 import { HealthModule } from './health/health.module';
 import { PhotosModule } from './photos/photos.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { PhotosModule } from './photos/photos.module';
     FoodsModule,
     PhotosModule,
     HealthModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
