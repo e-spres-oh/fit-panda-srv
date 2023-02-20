@@ -3,9 +3,11 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import User from '../users/user.entity';
 
 @Entity()
 class Food {
@@ -29,6 +31,13 @@ class Food {
   @OneToOne(() => Photo)
   @JoinColumn({ name: 'photo_id' })
   photo: Photo;
+
+  @Column({ name: 'user_id' })
+  userId: number;
+
+  @ManyToOne(() => User, (user) => user.foods)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
 
 export default Food;

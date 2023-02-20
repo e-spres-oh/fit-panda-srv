@@ -9,6 +9,7 @@ import Photo from './src/photos/photo.entity';
 import { CreateUser1676928617585 } from './migrations/1676928617585-CreateUser';
 import User from './src/users/user.entity';
 import { UniqueUsername1676930168814 } from './migrations/1676930168814-UniqueUsername';
+import { FoodBelongsToUser1676932980506 } from './migrations/1676932980506-FoodBelongsToUser';
 
 config();
 
@@ -27,5 +28,6 @@ export default new DataSource({
     FoodHasPhoto1676926579573,
     CreateUser1676928617585,
     UniqueUsername1676930168814,
+    FoodBelongsToUser1676932980506,
   ],
 });

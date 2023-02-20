@@ -1,33 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CurrentUser } from 'src/auth/jwt.strategy';
 import { Repository } from 'typeorm';
 import Food from './food.entity';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class FoodsService {
   constructor(
     @InjectRepository(Food)
     private foodsRepository: Repository<Food>,
+    @Inject(REQUEST)
+    private request: Request & { user: CurrentUser },
   ) {}
 
   async findAll() {
-    return this.foodsRepository.find();
+    return this.foodsRepository.findBy({ userId: this.request.user.id });
   }
 
   async findOne(id: number) {
-    return this.foodsRepository.findOneBy({ id });
+    return this.foodsRepository.findOneBy({ id, userId: this.request.user.id });
   }
 
   async remove(id: number) {
-    await this.foodsRepository.delete(id);
+    await this.foodsRepository.delete({ id, userId: this.request.user.id });
   }
 
   async create(food: Omit<Food, 'id'>) {
-    return this.foodsRepository.save(food);
+    return this.foodsRepository.save({ ...food, userId: this.request.user.id });
   }
 
   async update(id: number, food: Partial<Omit<Food, 'id'>>) {
-    await this.foodsRepository.update(id, food);
-    return this.foodsRepository.findOneBy({ id });
+    await this.foodsRepository.update(
+      { id, userId: this.request.user.id },
+      food,
+    );
+    return this.foodsRepository.findOneBy({ id, userId: this.request.user.id });
   }
 }
