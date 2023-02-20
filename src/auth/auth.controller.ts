@@ -6,15 +6,21 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { Public } from 'src/decorators';
 import User from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { AuthService } from './auth.service';
+import { LocalAuthGuard } from './local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
+  @Public()
   @Post('register')
   async create(@Body() user: Omit<User, 'id'>) {
     try {
@@ -29,9 +35,10 @@ export class AuthController {
     }
   }
 
-  @UseGuards(AuthGuard('local'))
+  @Public()
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Req() req: Request) {
-    return req.user;
+    return this.authService.login(req.user);
   }
 }
