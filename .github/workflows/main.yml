@@ -1,0 +1,79 @@
+name: main
+on: [push]
+
+env:
+  AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: fit-panda           # set this to your Amazon ECR repository name
+  ECS_SERVICE: fit-panda                 # set this to your Amazon ECS service name
+  ECS_CLUSTER: fit-panda                 # set this to your Amazon ECS cluster name
+  CONTAINER_NAME: container           # set this to the name of the container in the
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run_tests:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run linters
+        run: |
+          npm run lint
+
+      - name: Run tests
+        run: npm run test
+
+  deploy:
+    name: Build Image
+    needs: run_tests
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/nestjs' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+        shell: bash
+
+      - name: Build, tag, and push image to Amazon ECR
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/nestjs' }}
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}${{ steps.date.outputs.date }}
+        run: |
+          docker build -t $ECR_REPOSITORY .
+          docker tag $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker tag $ECR_REPOSITORY $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY --all-tags
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Restart Amazon ECS service
+        if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/nestjs' }}
+        run: aws ecs update-service --cluster fit-panda --service fit-panda --force-new-deployment >> /dev/null
