@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import Food from './entities/food.entity';
+import Food from './food.entity';
 import { FoodController } from './food.controller';
 import { FoodService } from './food.service';
 
-describe('AppController', () => {
+describe('FoodController', () => {
   let controller: FoodController;
 
   beforeEach(async () => {

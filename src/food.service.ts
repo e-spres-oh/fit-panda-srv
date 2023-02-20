@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import Food from './entities/food.entity';
+import Food from './food.entity';
 
 @Injectable()
 export class FoodService {
@@ -10,15 +10,24 @@ export class FoodService {
     private foodRepository: Repository<Food>,
   ) {}
 
-  findAll(): Promise<Food[]> {
+  async findAll() {
     return this.foodRepository.find();
   }
 
-  findOne(id: number): Promise<Food> {
+  async findOne(id: number) {
     return this.foodRepository.findOneBy({ id });
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: number) {
     await this.foodRepository.delete(id);
+  }
+
+  async create(food: Omit<Food, 'id'>) {
+    return this.foodRepository.save(food);
+  }
+
+  async update(id: number, food: Partial<Omit<Food, 'id'>>) {
+    await this.foodRepository.update(id, food);
+    return this.foodRepository.findOneBy({ id });
   }
 }
