@@ -32,6 +32,17 @@
 $ npm install
 ```
 
+## Configure environment
+
+Create a `.env` file, based on `.env.sample`
+
+## Create the DB & migrations
+
+```bash
+$ npm run typeorm:create-db
+$ npm run typeorm:run-migrations
+```
+
 ## Running the app
 
 ```bash
