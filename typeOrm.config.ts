@@ -10,6 +10,8 @@ import { CreateUser1676928617585 } from './migrations/1676928617585-CreateUser';
 import User from './src/users/user.entity';
 import { UniqueUsername1676930168814 } from './migrations/1676930168814-UniqueUsername';
 import { FoodBelongsToUser1676932980506 } from './migrations/1676932980506-FoodBelongsToUser';
+import { CreateProfile1676989287180 } from './migrations/1676989287180-CreateProfile';
+import { ProfileHasUser1676990111939 } from './migrations/1676990111939-ProfileHasUser';
 
 config();
 
@@ -29,5 +31,7 @@ export default new DataSource({
     CreateUser1676928617585,
     UniqueUsername1676930168814,
     FoodBelongsToUser1676932980506,
+    CreateProfile1676989287180,
+    ProfileHasUser1676990111939,
   ],
 });
