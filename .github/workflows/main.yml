@@ -76,4 +76,4 @@ jobs:
 
       - name: Restart Amazon ECS service
         if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/nestjs' }}
-        run: aws ecs update-service --cluster fit-panda --service fit-panda --force-new-deployment --region=${{ env.AWS_REGION }} >> /dev/null
+        run: aws ecs update-service --cluster fit-panda --service fit-panda --force-new-deployment >> /dev/null
