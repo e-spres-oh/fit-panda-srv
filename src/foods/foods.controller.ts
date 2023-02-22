@@ -57,4 +57,12 @@ export class FoodsController {
 
     return this.foodsService.remove(+id);
   }
+
+  @Get('search/:barcode')
+  async search(@Param('barcode') barcode: string) {
+    const response = await fetch(
+      `https://world.openfoodfacts.org/api/v2/search?code=${barcode}`,
+    );
+    return response.json();
+  }
 }
