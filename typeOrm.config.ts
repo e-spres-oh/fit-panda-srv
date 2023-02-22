@@ -5,7 +5,7 @@ import { CreateFood1676911962027 } from './migrations/1676911962027-CreateFood';
 import { AddConsumedAtToFood1676925781491 } from './migrations/1676925781491-AddConsumedAtToFood';
 import { CreatePhoto1676926319261 } from './migrations/1676926319261-CreatePhoto';
 import { FoodHasPhoto1676926579573 } from './migrations/1676926579573-FoodHasPhoto';
-import Photo from './src/photos/photo.entity';
+import Photo from './src/foods/photos/photo.entity';
 import { CreateUser1676928617585 } from './migrations/1676928617585-CreateUser';
 import User from './src/users/user.entity';
 import { UniqueUsername1676930168814 } from './migrations/1676930168814-UniqueUsername';

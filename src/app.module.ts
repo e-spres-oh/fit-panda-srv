@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
 import { FoodsModule } from './foods/foods.module';
 import { HealthModule } from './health/health.module';
-import { PhotosModule } from './photos/photos.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
@@ -26,7 +25,6 @@ import { ProfilesModule } from './profiles/profiles.module';
       logging: true,
     }),
     FoodsModule,
-    PhotosModule,
     HealthModule,
     AuthModule,
     UsersModule,

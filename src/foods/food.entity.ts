@@ -1,4 +1,4 @@
-import Photo from '../photos/photo.entity';
+import Photo from './photos/photo.entity';
 import {
   Column,
   Entity,
@@ -14,7 +14,7 @@ export class CreateFoodDTO {
   name: string;
   kcal: number;
   consumedAt: Date;
-  photoId: number;
+  photoId: number | null;
 }
 
 export class UpdateFoodDTO extends PartialType(CreateFoodDTO) {}
@@ -36,12 +36,12 @@ class Food {
   consumedAt: Date;
 
   @Column({ name: 'photo_id' })
-  photoId: number;
+  photoId: number | null;
 
   @ApiHideProperty()
   @OneToOne(() => Photo)
   @JoinColumn({ name: 'photo_id' })
-  photo: Photo;
+  photo: Photo | null;
 
   @Column({ name: 'user_id' })
   userId: number;
