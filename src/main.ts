@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // enable this when using https
-  // app.use(helmet());
+  app.use(helmet());
   app.enableCors();
 
   const config = new DocumentBuilder()
