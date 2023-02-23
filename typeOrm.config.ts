@@ -12,6 +12,7 @@ import { UniqueUsername1676930168814 } from './migrations/1676930168814-UniqueUs
 import { FoodBelongsToUser1676932980506 } from './migrations/1676932980506-FoodBelongsToUser';
 import { CreateProfile1676989287180 } from './migrations/1676989287180-CreateProfile';
 import { ProfileHasUser1676990111939 } from './migrations/1676990111939-ProfileHasUser';
+import { AddProfileAttributes1677146563928 } from './migrations/1677146563928-AddProfileAttributes';
 
 config();
 
@@ -33,5 +34,6 @@ export default new DataSource({
     FoodBelongsToUser1676932980506,
     CreateProfile1676989287180,
     ProfileHasUser1676990111939,
+    AddProfileAttributes1677146563928,
   ],
 });

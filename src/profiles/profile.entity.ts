@@ -25,6 +25,11 @@ export class CreateProfileDTO {
   activity: Activity;
   goal: Goal;
   target: number;
+  name: string;
+  age: number;
+  sex: string;
+  height: number;
+  weight: number;
   userId: number;
 }
 
@@ -53,6 +58,21 @@ class Profile {
 
   @Column()
   target: number;
+
+  @Column()
+  name: string;
+
+  @Column()
+  age: number;
+
+  @Column()
+  sex: string;
+
+  @Column()
+  height: number;
+
+  @Column()
+  weight: number;
 
   @Column({ name: 'user_id' })
   userId: number;
