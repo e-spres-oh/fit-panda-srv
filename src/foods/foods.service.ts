@@ -26,11 +26,15 @@ export class FoodsService {
     await this.foodsRepository.delete({ id, userId: this.request.user.id });
   }
 
-  async create(food: CreateFoodDTO) {
-    return this.foodsRepository.save({ ...food, userId: this.request.user.id });
+  async create({ photoId, ...food }: CreateFoodDTO) {
+    const { id } = await this.foodsRepository.save({
+      ...food,
+      userId: this.request.user.id,
+    });
+    return this.findOne(id) as Promise<Food>;
   }
 
-  async update(id: number, food: UpdateFoodDTO) {
+  async update(id: number, { photoId, ...food }: UpdateFoodDTO) {
     await this.foodsRepository.update(
       { id, userId: this.request.user.id },
       food,

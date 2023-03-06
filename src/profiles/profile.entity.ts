@@ -1,4 +1,6 @@
 import { ApiHideProperty, PartialType } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
+import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import User from 'src/users/user.entity';
 import {
   Column,
@@ -22,14 +24,39 @@ export enum Goal {
 }
 
 export class CreateProfileDTO {
+  @IsOptional()
+  @IsEnum(Activity)
   activity: Activity;
+
+  @IsOptional()
+  @IsEnum(Goal)
   goal: Goal;
+
+  @IsOptional()
+  @IsNumber()
   target: number;
+
+  @IsOptional()
+  @IsString()
   name: string;
+
+  @IsOptional()
+  @IsNumber()
   age: number;
+
+  @IsOptional()
+  @IsString()
   sex: string;
+
+  @IsOptional()
+  @IsNumber()
   height: number;
+
+  @IsOptional()
+  @IsNumber()
   weight: number;
+
+  @Exclude()
   userId: number;
 }
 

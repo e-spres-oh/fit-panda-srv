@@ -20,14 +20,14 @@ export class ProfilesService {
     });
   }
 
-  async create(profile: CreateProfileDTO) {
+  async create({ userId, ...profile }: CreateProfileDTO) {
     return this.profilesRepository.save({
       ...profile,
       userId: this.request.user.id,
     });
   }
 
-  async update(profile: UpdateProfileDTO) {
+  async update({ userId, ...profile }: UpdateProfileDTO) {
     await this.profilesRepository.update(
       { userId: this.request.user.id },
       profile,

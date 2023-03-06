@@ -9,11 +9,26 @@ import {
 } from 'typeorm';
 import User from '../users/user.entity';
 import { ApiHideProperty, PartialType } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
+import { Exclude } from 'class-transformer';
 
 export class CreateFoodDTO {
+  @IsNotEmpty()
   name: string;
+
+  @IsNumber()
   kcal: number;
+
+  @IsOptional()
+  @IsDateString()
   consumedAt: Date;
+
+  @Exclude()
   photoId: number | null;
 }
 

@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
-import Photo from './photo.entity';
 import { PhotosService } from './photos.service';
 
 @ApiTags('foods')
