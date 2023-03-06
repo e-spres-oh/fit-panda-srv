@@ -14,9 +14,9 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async findOne(username: string, password: string) {
+  async findOne(email: string, password: string) {
     const user = await this.usersRepository.findOneBy({
-      username,
+      email,
     });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return null;

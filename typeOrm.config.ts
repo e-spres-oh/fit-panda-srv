@@ -13,6 +13,7 @@ import { FoodBelongsToUser1676932980506 } from './migrations/1676932980506-FoodB
 import { CreateProfile1676989287180 } from './migrations/1676989287180-CreateProfile';
 import { ProfileHasUser1676990111939 } from './migrations/1676990111939-ProfileHasUser';
 import { AddProfileAttributes1677146563928 } from './migrations/1677146563928-AddProfileAttributes';
+import { RenameUsernameToEmail1678109732332 } from './migrations/1678109732332-RenameUsernameToEmail';
 
 config();
 
@@ -35,5 +36,6 @@ export default new DataSource({
     CreateProfile1676989287180,
     ProfileHasUser1676990111939,
     AddProfileAttributes1677146563928,
+    RenameUsernameToEmail1678109732332,
   ],
 });

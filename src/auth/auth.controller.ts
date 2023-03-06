@@ -30,7 +30,7 @@ export class AuthController {
       return result;
     } catch (error) {
       if (error.constraint === 'UQ_8d93d6e9c26205a1935956218ab') {
-        throw new BadRequestException('Username already exists');
+        throw new BadRequestException('Email already exists');
       }
 
       throw error;

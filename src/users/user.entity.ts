@@ -2,13 +2,13 @@ import Food from '../foods/food.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export class CreateUserDTO {
-  username: string;
+  email: string;
   password: string;
 }
 
 export class UserDTO {
   id: number;
-  username: string;
+  email: string;
 }
 
 @Entity()
@@ -19,7 +19,7 @@ class User {
   id: number;
 
   @Column({ unique: true })
-  username: string;
+  email: string;
 
   @Column()
   password: string;
