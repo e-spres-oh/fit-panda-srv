@@ -2,7 +2,7 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CurrentUser } from 'src/auth/jwt.strategy';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import Food, { CreateFoodDTO, UpdateFoodDTO } from './food.entity';
 
 @Injectable({ scope: Scope.REQUEST })
@@ -14,8 +14,16 @@ export class FoodsService {
     private request: Request & { user: CurrentUser },
   ) {}
 
-  async findAll() {
-    return this.foodsRepository.findBy({ userId: this.request.user.id });
+  async findAll(query?: FindOptionsWhere<Food>) {
+    return this.foodsRepository.find({
+      where: {
+        userId: this.request.user.id,
+        ...query,
+      },
+      order: {
+        consumedAt: 'DESC',
+      },
+    });
   }
 
   async findOne(id: number) {

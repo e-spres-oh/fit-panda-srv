@@ -8,9 +8,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Between } from 'typeorm';
+import { startOfDay, endOfDay, parseISO } from 'date-fns';
 import Food, { CreateFoodDTO, UpdateFoodDTO } from './food.entity';
+import { FoodQuery } from './food.queries';
 import { FoodsService } from './foods.service';
 
 @ApiTags('foods')
@@ -19,8 +23,18 @@ export class FoodsController {
   constructor(private readonly foodsService: FoodsService) {}
 
   @Get()
-  async findAll(): Promise<Food[]> {
-    return this.foodsService.findAll();
+  async findAll(@Query() { consumedAt }: FoodQuery): Promise<Food[]> {
+    if (!consumedAt) {
+      return this.foodsService.findAll();
+    }
+
+    console.log(consumedAt);
+    return this.foodsService.findAll({
+      consumedAt: Between(
+        startOfDay(parseISO(consumedAt)),
+        endOfDay(parseISO(consumedAt)),
+      ),
+    });
   }
 
   @Post()
