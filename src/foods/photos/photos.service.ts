@@ -59,6 +59,7 @@ export class PhotosService {
       contentType: file.mimetype,
       checksum: s3File.ETag,
     });
+
     await this.foodsService.update(foodId, { photoId: photo.id });
     return photo;
   }

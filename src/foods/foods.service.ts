@@ -42,7 +42,7 @@ export class FoodsService {
     return this.findOne(id) as Promise<Food>;
   }
 
-  async update(id: number, { photoId, ...food }: UpdateFoodDTO) {
+  async update(id: number, food: UpdateFoodDTO) {
     await this.foodsRepository.update(
       { id, userId: this.request.user.id },
       food,

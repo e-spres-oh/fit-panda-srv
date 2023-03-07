@@ -28,7 +28,6 @@ export class FoodsController {
       return this.foodsService.findAll();
     }
 
-    console.log(consumedAt);
     return this.foodsService.findAll({
       consumedAt: Between(
         startOfDay(parseISO(consumedAt)),
@@ -54,7 +53,8 @@ export class FoodsController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() food: UpdateFoodDTO) {
-    const result = await this.foodsService.update(+id, food);
+    const { photoId, ...rest } = food;
+    const result = await this.foodsService.update(+id, rest);
     if (!result) {
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     }
